@@ -1,0 +1,33 @@
+env_name: vehicle-repositioning-simultaneous
+logging: offline
+device: cpu
+entity: user
+logdir:
+eval_logdir: ~/real_time_lp_eval
+run_id: 20250307
+exec_type: lp_eval
+model:
+  framework: lp
+  num_cells: 625
+  input_data_path: 
+  control_std: 0.0175
+  mu_init: demand
+  max_entropy_ratio:
+  barrier_lambda: 1.0
+  num_agents: 18000
+  reward_type: current_mu
+  optimizer_cfg:
+    rebalancer_type: real-time
+    desired_count_pct: 0.8
+    max_iter: 30000
+  real_world_matching_cfg:
+    type: global_matching_simulator
+    num_vehicles: 18000
+    num_rounds: 20
+    num_matching_cell_neighbors: 1.0
+    waiting_rounds: 5
+training:
+  n_episodes: 1000
+  horizon: 18
+  warmup_steps: 0
+  n_repeats: 10

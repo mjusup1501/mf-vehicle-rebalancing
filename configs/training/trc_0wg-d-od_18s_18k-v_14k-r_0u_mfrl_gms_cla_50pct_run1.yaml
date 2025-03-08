@@ -1,0 +1,70 @@
+env_name: vehicle-repositioning-simultaneous
+logging: offline
+device: cuda:0
+entity: user
+logdir: ~/mfrl_training
+run_id: 20250307
+dynamics_ckpt:
+policy_ckpt:
+exec_type: train
+model:
+  framework: mfrl
+  num_cells: 625
+  input_data_path:
+  control_std: 0.0175
+  mu_init: demand
+  max_entropy_ratio: 0.5
+  barrier_lambda: 1.0
+  num_agents: 1
+  reward_type: current_mu
+  matching_target: classification
+  real_world_matching_cfg:
+    type: global_matching_simulator
+    num_vehicles: 18000
+    num_rounds: 20
+    num_matching_cell_neighbors: 1.0
+    waiting_rounds: 5
+  mf_matching_cfg:
+    type: statistical_model
+    input_type: grid
+    num_nets: 1
+    hidden_dims:
+    - 2056
+    - 1024
+    - 256
+    - 64
+    - 8
+    num_epochs: 1000
+    buffer_size: 10
+    batch_size: 16
+    holdout: 0.9
+    lr: 0.001
+    weight_decay: 0.0005
+    dim_reduction:
+    reset_weights_until_episode: 10
+    patience: 30
+    min_improvement: 0.01
+    checkpoint:
+  optimizer_cfg:
+    type: mf_policy
+    policy_cfg:
+      lr: 0.0005
+      hidden_dims:
+      - 512
+      - 256
+      - 256
+      - 64
+      weight_decay: 0.0005
+    num_epochs: 1000
+    non_stationary: true
+    reset_weights_until_episode: 10
+    explore_until_episode: 20
+    exploration_decay: 0.02
+    patience: 1
+    min_improvement: 0.05
+    checkpoint:
+training:
+  n_episodes: 100
+  horizon: 18
+  warmup_steps: 0
+  n_repeats: 1
