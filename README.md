@@ -1,5 +1,7 @@
 # Mean-Field Reinforcement Learning for Ride-Sourcing Vehicle Rebalancing under Accessibility Constraint
 
+[![DOI](https://zenodo.org/badge/944754278.svg)](https://doi.org/10.5281/zenodo.14991604)
+
 To install required packages, run `pip install -e .`
 
 In `configs` directory you can find training and evaluation config files for MFRL and MFRL algorithms.
